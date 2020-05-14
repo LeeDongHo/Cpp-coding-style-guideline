@@ -6,7 +6,7 @@ Google C++ Style Guideline을 참고함.
 1. **Type Names**은 **파스칼 표기법**을 따른다.
 ```
 // Class ans structs
-Class NetworkLibrary{
+class NetworkLibrary{
 ...
 };
 
@@ -34,4 +34,20 @@ std::string newString;
 4. **Const**는 **접두어로 k**를 붙인다.
 ```
 const int kWidth = 3;
+```
+
+### B. 중괄호
+1. 클래스, 구조체의 경우 중괄호를 붙여서 사용합니다.
+```
+class NetworkLibrary{
+
+}
+```
+
+2. 그 외의 경우에는 중괄호를 띄어서 사용합니다. (함수, if-else 등)
+```
+int Sum(int a, int b)
+{
+  return a+b;
+}
 ```
