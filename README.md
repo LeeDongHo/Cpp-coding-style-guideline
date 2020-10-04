@@ -62,3 +62,64 @@ C++ 파일 확장자는 .cc, 헤더는 .h를 사용해야합니다. 특정지점
 
 db.h처럼 /user/include에 존재하는 파일 이름은 사용하지 마세요.
 logs.h 대신 http_server_logs.h 같이 명시적인 파일 이름을 사용하세요. 클래스는 같은 이름을 사용하세요. 예를 들면 FooBar 클래스는 foo_bar.h, foo_bar.cc를 사용해야합니다.
+
+### C. 타입명 (Type Names)
+타입명은 대문자로 시작하고 새로운 단어가 나올 때 언더스코어 대신 대문자를 사용합니다. MyExcitingClass, MyExcitingEnum.
+모든 타입들(클래스, 구조체, type aliases, enums, template parameters)은 같은 명명규칙을 사용합니다. 
+```
+// classes and structs
+class UrlTable { ... 
+class UrlTableTester { ...
+struct UrlTableProperties { ...
+
+// typedefs
+typedef hash_map<UrlTableProperties *, std::string> PropertiesMap;
+
+// using aliases
+using PropertiesMap = hash_map<UrlTableProperties *, std::string>;
+
+// enums
+enum class UrlTableError { ...
+```
+
+### D. 변수명 (Variable Names)
+변수(함수 파라미터 포함), 멤버 변수의 이름은 모두 소문자와 언더스코어를 사용합니다. 구조체 변수는 해당하지 않고 클래스의 멤버 변수는 이름 끝에 언더스코어를 붙입니다.
+
+#### **공통 변수명**
+```
+std::string tableName;    // BAD
+std::string table_name;   // OK
+```
+
+#### **클래스 멤버 변수**
+정적 혹은 비정적인 클래스 멤버 변수들은 일반 변수 명명 규칙을 따르지만 *끝에 언더스코어를 붙여줘야합니다*.
+```
+class TableInfo{
+  ...
+  private:
+    std::string table_name_;      // OK
+    static Pool<TableInfo>* pool_ // OK
+}
+```
+
+#### **구조체 변수**
+정적이거나 비정적인 구조체 변수들은 일반 변수 명명 규칙을 따릅니다. *클래스 처럼 끝에 언더스코어를 붙이지 않습니다.*
+```
+struct UrlTableProperties {
+  std::string anme;
+  int num_entries;
+  static Pool<UrlTableProperties>* pool;
+}
+```
+
+### E. 상수명 (Constant Names)
+constexpr 또는 const로 선언됐고 프로그램 동작 중 값이 고정된 변수들 이름 앞에 k를 붙입니다. 단어를 구분할 때 대문자를 쓸 수 없는 경우 언더스코어를 사용할 수 있습니다.
+```
+const int kDaysInAWeek = 7;
+const int kAndroid8_0_0 = 24;   //  Android 8.0.0
+```
+정적으로 저장되는 모든 변수(static, 전역 변수)는 상수 명명 규칙을 사용해야합니다. 이 규칙은 다른 저장 범위 변수(Automatic 변수)들에게는 선택사항 입니다.
+[[정적 저장 변수 범위]](https://en.cppreference.com/w/cpp/language/storage_duration#Storage_duration)
+
+### F. 함수명 (Function Names)
+보통 함수명에는 대소문자가 혼합되어있습니다. 
